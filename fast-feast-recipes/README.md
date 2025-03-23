@@ -1,70 +1,111 @@
-# Getting Started with Create React App
+# Fast Feast Recipes
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Fast Feast Recipes is a React-based recipe finder app that allows users to explore various recipes by categories, search for meals, and view detailed ingredients and cooking instructions. The app utilizes the MealDB API to fetch and display real-time recipe data.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Splash Screen**: Displays the app logo and transitions to the landing page after 5 seconds.
+- **Landing Page**: Provides navigation to Home, Favorites, and Explore.
+- **Category Browsing**: Users can select from categories (Breakfast, Main Dish, Snacks, Smoothies) to view related recipes.
+- **Recipe Detail Page**: Displays detailed information, including the name, image, ingredients, and cooking instructions.
+- **Search Functionality**: Users can search for recipes using keywords.
+- **Navigation Arrows**:
+  - "Back" and "Next" buttons for easy navigation between screens.
+  - Recipe detail pages allow navigation between different meals.
+- **Testimonials Page**: Displays user feedback about the app.
+- **Fully Responsive Design**: Works on both mobile and desktop devices.
 
-### `npm start`
+## Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Frontend**: React.js, TailwindCSS
+- **State Management**: useState, useEffect (React Hooks)
+- **API Calls**: Axios
+- **Routing**: React Router
+- **API**: [MealDB API](https://www.themealdb.com/api.php)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Installation & Setup
 
-### `npm test`
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/your-username/recipe-finder-app.git
+   cd recipe-finder-app
+   ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
 
-### `npm run build`
+3. **Start the Development Server**
+   ```bash
+   npm start
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## API Usage
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The app fetches data from the MealDB API:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Fetch Recipes by Category**
+  ```js
+  axios.get('https://www.themealdb.com/api/json/v1/1/filter.php?c=Breakfast')
+    .then(response => console.log(response.data))
+    .catch(error => console.error(error));
+  ```
+- **Fetch Recipe Details by ID**
+  ```js
+  axios.get('https://www.themealdb.com/api/json/v1/1/lookup.php?i=52772')
+    .then(response => console.log(response.data))
+    .catch(error => console.error(error));
+  ```
 
-### `npm run eject`
+## Project Structure
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
+recipe-finder-app/
+├── src/
+│   ├── components/
+│   │   ├── NavigationArrows.jsx
+│   │   ├── SearchBar.jsx
+│   │   ├── RecipeCard.jsx
+│   ├── pages/
+│   │   ├── LandingPage.jsx
+│   │   ├── Breakfast.jsx
+│   │   ├── MainDish.jsx
+│   │   ├── Snacks.jsx
+│   │   ├── Smoothies.jsx
+│   │   ├── RecipeDetail.jsx
+│   │   ├── Testimonials.jsx
+│   ├── App.js
+│   ├── index.js
+├── public/
+│   ├── images/
+├── package.json
+├── README.md
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Deployment
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+To deploy the app using **Vercel**:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. Install Vercel CLI
+   ```bash
+   npm install -g vercel
+   ```
+2. Deploy the app
+   ```bash
+   vercel
+   ```
 
-## Learn More
+## Color Palette
+- **Primary**: `#FF6347` (Tomato Red)
+- **Secondary**: `#4CAF50` (Green)
+- **Background**: `#F8F9FA` (Light Gray)
+- **Text**: `#333333` (Dark Gray)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## License
+This project is licensed under the MIT License.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+**Enjoy Fast Feast Recipes! 🍽️**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
