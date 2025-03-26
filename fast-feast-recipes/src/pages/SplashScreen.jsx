@@ -9,15 +9,15 @@ const SplashScreen = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       navigate("/landing");
-    }, 5000);
+    }, 15000);
     return () => clearTimeout(timer);
   }, [navigate]);
 
   return (
     <div
-      className="relative w-full h-screen flex items-center justify-center"
+      className="bg-maroonBrown min-h-screen flex justify-center items-center"
       style={{
-        backgroundColor: "white", // explicitly white
+        backgroundColor: "#964B00 ", // explicitly white
         backgroundImage: `url(${background})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
@@ -31,7 +31,7 @@ const SplashScreen = () => {
       />
 
       {/* Bold, centered app name */}
-      <h1 className="relative text-black text-4xl font-bold">
+      <h1 className=" <h1 className="text-white text-3xl font-bold>
         Fast Feast Recipes
       </h1>
     </div>

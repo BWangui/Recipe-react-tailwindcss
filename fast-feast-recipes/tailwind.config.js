@@ -26,6 +26,9 @@ export default {
         fadeIn: "fadeIn 2s ease-in-out",
         moveIn: "moveIn 1.5s ease-out",
       },
+      colors: {
+        maroonBrown: "#964B00",
+      },
     },
   },
   plugins: [],

@@ -7,7 +7,6 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<SplashScreen />} />
-        <Route path="/landing" element={<LandingPage />} />
       </Routes>
     </Router>
   );
