@@ -1,8 +1,7 @@
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import SplashScreen from "./pages/SplashScreen";
+import SplashScreen from "./pages/SplashScreen"; // Ensure correct import
 
-function App() {
+const App = () => {
   return (
     <Router>
       <Routes>
@@ -10,6 +9,6 @@ function App() {
       </Routes>
     </Router>
   );
-}
+};
 
 export default App;

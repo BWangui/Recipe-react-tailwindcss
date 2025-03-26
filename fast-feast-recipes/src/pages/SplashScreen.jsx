@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import background from "../assets/background-image.jpg"; // Your food image
-import logo from "../assets/logo.jpeg"; // Your JPEG logo
+
+import logo from "../assets/logo.png"; // 
 
 const SplashScreen = () => {
   const navigate = useNavigate();
@@ -15,25 +13,21 @@ const SplashScreen = () => {
 
   return (
     <div
-      className="bg-maroonBrown min-h-screen flex justify-center items-center"
+      className="flex flec-col justify items-center h-screen bg-center text-white"
       style={{
-        backgroundColor: "#964B00 ", // explicitly white
-        backgroundImage: `url(${background})`,
+        backgroundImage: "url('../assets/background.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      {/* Logo in the top-left */}
       <img
         src={logo}
-        alt="Fast Feast Recipes Logo"
-        className="absolute top-4 left-4 w-20"
+        alt="logo.png"
+        className="w-32 h-32 mb-4" 
       />
 
       {/* Bold, centered app name */}
-      <h1 className=" <h1 className="text-white text-3xl font-bold>
-        Fast Feast Recipes
-      </h1>
+      <h1 className=" <h1 className="text-white text-4xl font-bold>Fast Feast Recipes</h1>
     </div>
   );
 };

@@ -4,7 +4,7 @@ Fast Feast Recipes is a modern recipe finder app built with **React**, **Tailwin
 
 ## 🚀 Features
 
-- **Splash Screen** → Displays for 5 seconds before navigating to the landing page.
+- **Splash Screen** → Displays for 15 seconds before navigating to the landing page.
 - **Landing Page** → Showcases categories: **Breakfast, Main Dish, Snacks, Smoothies**.
 - **Category Pages** → Displays meals under each category with images.
 - **Recipe Details** → Shows ingredients, instructions, and images for each meal.
@@ -18,7 +18,7 @@ Fast Feast Recipes is a modern recipe finder app built with **React**, **Tailwin
 | Color        | Hex Code  | Usage            |
 |-------------|----------|------------------|
 | 🔴 Primary  | `#E63946` | Buttons, Highlights |
-| 🟡 Secondary | `#F1FAEE` | Background, Sections |
+| 🟡 Secondary | `#800000` | Background, Sections |
 | 🟢 Accent    | `#A8DADC` | Additional Highlights |
 | 🔵 Dark Mode | `#1D3557` | Text, Dark Mode |
 
