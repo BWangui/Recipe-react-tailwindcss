@@ -1,12 +1,38 @@
-# React + Vite
+# 🍽️ Fast Feast Recipes
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Fast Feast Recipes is a modern recipe finder app built with **React**, **Tailwind CSS**, and **Vite**. It fetches recipes from the **MealDB API**, allowing users to explore various meal categories, view detailed recipes, and search for their favorite meals.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Splash Screen** → Displays for 5 seconds before navigating to the landing page.
+- **Landing Page** → Showcases categories: **Breakfast, Main Dish, Snacks, Smoothies**.
+- **Category Pages** → Displays meals under each category with images.
+- **Recipe Details** → Shows ingredients, instructions, and images for each meal.
+- **Search Functionality** → Users can search for recipes using a search bar.
+- **Responsive Design** → Works seamlessly on both **desktop** and **mobile** devices.
+- **Navigation Icons (Mobile)** → Home, Favorites, and Explore for better user experience.
+- **Fetches Recipes from MealDB API** using `fetch` or `Axios`.
 
-## Expanding the ESLint configuration
+## 🎨 Color Palette
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+| Color        | Hex Code  | Usage            |
+|-------------|----------|------------------|
+| 🔴 Primary  | `#E63946` | Buttons, Highlights |
+| 🟡 Secondary | `#F1FAEE` | Background, Sections |
+| 🟢 Accent    | `#A8DADC` | Additional Highlights |
+| 🔵 Dark Mode | `#1D3557` | Text, Dark Mode |
+
+## 🛠️ Tech Stack
+
+- **Frontend:** React, Tailwind CSS, Vite
+- **State Management:** React Hooks
+- **API:** MealDB API (`https://www.themealdb.com/api.php`)
+- **Routing:** React Router
+
+## 📦 Installation
+
+### 1️⃣ Clone the Repository
+
+```sh
+git clone https://github.com/yourusername/fast-feast-recipes.git
+cd fast-feast-recipes

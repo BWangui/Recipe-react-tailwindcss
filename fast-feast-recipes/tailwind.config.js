@@ -3,6 +3,9 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      backgroundImage: {
+        'splash': "url('/images/background.jpg')",
+      },
       colors: {
         primary: "#E63946", 
         secondary: "#F1FAEE",
