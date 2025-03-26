@@ -21,6 +21,7 @@ const App = () => {
 
         {/* Show Navbar only after SplashScreen */}
         <Navbar />
+        <h1 className="text-center text-2xl mt-6">Welcome to Fast Feast Recipes</h1>
       </div>
     </Router>
   );
