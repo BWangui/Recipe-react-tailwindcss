@@ -1,28 +1,39 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/logo.jpeg"; // Import the logo
+import background from "../assets/background-image.jpg"; // Your food image
+import logo from "../assets/logo.jpeg"; // Your JPEG logo
 
 const SplashScreen = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate("/home"); // Navigate to Landing Page
+      navigate("/landing");
     }, 5000);
-    
     return () => clearTimeout(timer);
   }, [navigate]);
 
   return (
-    <div 
-      className="flex items-center justify-center h-screen bg-cover-blue-500" 
-      style={{ backgroundImage: "url('/background image.jpg')" }} // Background Image
+    <div
+      className="relative w-full h-screen flex items-center justify-center"
+      style={{
+        backgroundColor: "white", // explicitly white
+        backgroundImage: `url(${background})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
     >
-      {/* Logo at the Top Left */}
-      <img src="logo.jpeg" alt="Fast Feast Logo" className="absolute top-4 left-4 w-24 animate-fadeIn" />
+      {/* Logo in the top-left */}
+      <img
+        src={logo}
+        alt="Fast Feast Recipes Logo"
+        className="absolute top-4 left-4 w-20"
+      />
 
-      {/* App Name with Move-in Effect */}
-      <h1 className="text-white text-4xl font-bold animate-moveIn">Fast Feast Recipes</h1>
+      {/* Bold, centered app name */}
+      <h1 className="relative text-black text-4xl font-bold">
+        Fast Feast Recipes
+      </h1>
     </div>
   );
 };
