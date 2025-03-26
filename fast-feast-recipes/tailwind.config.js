@@ -12,6 +12,20 @@ export default {
         accent: "#A8DADC",
         darkBlue: "#1D3557",
       },
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        moveIn: {
+          "0%": { transform: "translateY(-50px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+      },
+      animation: {
+        fadeIn: "fadeIn 2s ease-in-out",
+        moveIn: "moveIn 1.5s ease-out",
+      },
     },
   },
   plugins: [],
