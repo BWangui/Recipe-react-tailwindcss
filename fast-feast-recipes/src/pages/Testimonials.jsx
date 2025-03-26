@@ -1,3 +1,5 @@
+import React from "react";
+
 const Testimonials = () => {
   const testimonials = [
     { name: "Alice", text: "Fast Feast Recipes helped me cook delicious meals in no time!" },
