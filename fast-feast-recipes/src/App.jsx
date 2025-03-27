@@ -5,10 +5,11 @@ import MealtCategory from './components/MealCategory'
 import SingleMealcategory from './components/SingleMealcategory'
 import Navbar from './components/Navbar'
 import "./App.css"
-import Favourite from './pages/Favourite'
+import FavoriteRecipes from './pages/FavoriteRecipes'
 import Footer from './components/Footer'
 import { Toaster } from 'react-hot-toast'
 import NotFound from './components/NotFound'
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -16,9 +17,9 @@ const App = () => {
     <Navbar/>
     <Routes>
       <Route path="/" element={<Home/>}/>
-      <Route path="/categories/:id" element={<SingleCategory/>}/>
-      <Route path="/meal/:id" element={<SingleMeal/>}/>
-      <Route path="/favourite" element={<Favourite/>}/>
+      <Route path="/Categories/:id" element={<SingleMealCategory/>}/>
+      <Route path="/meal/:id" element={<SingleMealcategory/>}/>
+      <Route path="/favoriteRecipes" element={<FavoriteRecipes/>}/>
       <Route path="/*" element={<NotFound/>}/>
     </Routes>
     <Footer/>
