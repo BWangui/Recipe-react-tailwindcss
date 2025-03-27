@@ -10,6 +10,9 @@ function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [categoryMeals, setCategoryMeals] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   const { addFavorite, removeFavorite, isFavorite } = useFavorites();
 
@@ -33,6 +36,16 @@ function Home() {
         setLoading(false);
       });
   }, [searchTerm]);
+
+  // Fetch all categories on mount
+  useEffect(() => {
+    fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`)
+      .then(response => response.json())
+      .then(data => {
+        setCategories(data.categories || []);
+      })
+      .catch(err => console.error('Error fetching categories:', err));
+  }, []);
 
   // Handle search form submission
   const handleSearch = (e) => {
@@ -61,7 +74,7 @@ function Home() {
       });
   };
 
-  // Open the modal for detailed view
+  // Open modal with detailed recipe info
   const handleCardClick = (meal) => {
     setSelectedRecipe(meal);
   };
@@ -70,102 +83,137 @@ function Home() {
     setSelectedRecipe(null);
   };
 
+  // Fetch meals for a clicked category
+  const handleCategoryClick = (categoryName) => {
+    setLoading(true);
+    setError(null);
+    setSelectedCategory(categoryName);
+    fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryName}`)
+      .then(response => response.json())
+      .then(data => {
+        setCategoryMeals(data.meals || []);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Error fetching category meals:', err);
+        setError(`Failed to fetch meals for category: ${categoryName}`);
+        setLoading(false);
+      });
+  };
+
   return (
-    <div>
-      {/* Section One: Welcome & Search */}
-      <section className="py-8 bg-sectionOne text-textLight">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-3xl font-bold mb-4">Welcome to Fast Feast Recipes</h1>
-          <p className="text-lg mb-6">
-            Discover vibrant, delicious recipes to spice up your kitchen!
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-            <form onSubmit={handleSearch} className="flex w-full max-w-md">
-              <input
-                type="text"
-                name="search"
-                placeholder="Search for a meal..."
-                className="w-full px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-              <button
-                type="submit"
-                className="px-4 py-2 bg-primary text-white rounded-r-md hover:bg-secondary transition-colors"
-              >
-                Search
-              </button>
-            </form>
-            <button
-              onClick={fetchRandomRecipe}
-              className="px-4 py-2 bg-secondary text-white rounded-md hover:bg-accent transition-colors"
-            >
-              Random Recipe
-            </button>
-          </div>
-          {loading && <div className="mt-4 text-lg">Loading...</div>}
-          {error && <div className="mt-4 text-red-200">{error}</div>}
-        </div>
-      </section>
-
-      {/* Section Two: Recipe Listings */}
-      <section className="py-8 bg-sectionTwo text-textLight">
-        <div className="container mx-auto px-4">
-          <h2 className="text-2xl font-bold mb-4 text-center">Featured Recipes</h2>
-          {loading && <div className="text-center text-lg">Loading...</div>}
-          {error && <div className="text-center text-red-200 mb-4">{error}</div>}
-          {!loading && !error && meals.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {meals.map((meal) => (
-                <div key={meal.idMeal} className="bg-white rounded shadow overflow-hidden hover:shadow-lg transition-shadow">
-                  <img
-                    src={meal.strMealThumb}
-                    alt={meal.strMeal}
-                    className="w-full h-48 object-cover cursor-pointer"
-                    onClick={() => handleCardClick(meal)}
-                  />
-                  <div className="p-4">
-                    <h2 className="text-xl font-semibold text-accent">{meal.strMeal}</h2>
-                    <p className="mt-2 text-text">{meal.strInstructions.substring(0, 80)}...</p>
-                    <button
-                      onClick={() => {
-                        if (isFavorite(meal.idMeal)) {
-                          removeFavorite(meal.idMeal);
-                        } else {
-                          addFavorite(meal);
-                        }
-                      }}
-                      className="mt-2 flex items-center gap-2 px-4 py-2 bg-accent text-white rounded hover:bg-opacity-80 transition-colors"
-                    >
-                      <FiHeart color={isFavorite(meal.idMeal) ? 'red' : 'white'} size={20} />
-                      <span>{isFavorite(meal.idMeal) ? 'Remove Favorite' : 'Add to Favorites'}</span>
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            !loading &&
-            !error &&
-            searchTerm && (
-              <div className="text-center">No recipes found. Try another search!</div>
-            )
-          )}
-        </div>
-      </section>
-
-      {/* Section Three: Call-to-Action */}
-      <section className="py-8 bg-sectionThree text-textDark">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-2xl font-bold mb-4">Join Our Culinary Community</h2>
-          <p className="text-lg mb-6">
-            Sign up for our newsletter and never miss out on new, exciting recipes!
-          </p>
-          <button className="px-6 py-3 bg-primary text-white rounded hover:bg-secondary transition-colors">
-            Sign Up Now
+    <div className="bg-blackCoffee min-h-screen text-white p-6">
+      {/* Search & Random Recipe Section */}
+      <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8">
+        <form onSubmit={handleSearch} className="flex w-full max-w-md">
+          <input
+            type="text"
+            name="search"
+            placeholder="Search for a meal..."
+            className="w-full px-4 py-2 border border-gray-300 bg-cardBg text-white rounded-l-md focus:bg-white focus:text-black focus:outline-none"
+          />
+          <button
+            type="submit"
+            className="px-4 py-2 bg-primary text-white rounded-r-md hover:bg-red-500 transition-colors"
+          >
+            Search
           </button>
-        </div>
-      </section>
+        </form>
+        <button
+          onClick={fetchRandomRecipe}
+          className="px-4 py-2 bg-secondary text-white rounded-md hover:bg-highlight transition-colors"
+        >
+          Random Recipe
+        </button>
+      </div>
 
-      {/* Recipe Modal */}
+      {/* Display Search Results */}
+      {loading && <div className="text-center text-lg">Loading...</div>}
+      {error && <div className="text-center text-red-500 mb-4">{error}</div>}
+
+      {!loading && !error && meals.length > 0 && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {meals.map((meal) => (
+            <div key={meal.idMeal} className="bg-cardBg rounded shadow overflow-hidden hover:shadow-lg transition-shadow">
+              <img
+                src={meal.strMealThumb}
+                alt={meal.strMeal}
+                className="w-full h-48 object-cover cursor-pointer"
+                onClick={() => handleCardClick(meal)}
+              />
+              <div className="p-4">
+                <h2 className="text-xl font-semibold text-accent">{meal.strMeal}</h2>
+                <p className="mt-2 text-textMuted">{meal.strInstructions.substring(0, 80)}...</p>
+                <button
+                  onClick={() => {
+                    if (isFavorite(meal.idMeal)) {
+                      removeFavorite(meal.idMeal);
+                    } else {
+                      addFavorite(meal);
+                    }
+                  }}
+                  className="mt-2 flex items-center gap-2 px-4 py-2 bg-accent text-white rounded hover:bg-opacity-80 transition-colors"
+                >
+                  <FiHeart color={isFavorite(meal.idMeal) ? 'red' : 'white'} size={20} />
+                  <span>{isFavorite(meal.idMeal) ? 'Remove Favorite' : 'Add to Favorites'}</span>
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* All Categories Section */}
+      <div className="mt-10">
+        <h2 className="text-3xl font-bold text-white text-center mb-6">All Categories</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+          {categories.map((category) => (
+            <div
+              key={category.idCategory}
+              onClick={() => handleCategoryClick(category.strCategory)}
+              className="bg-[#F96D00] text-white rounded-lg shadow-lg overflow-hidden cursor-pointer transform transition duration-300 hover:scale-105"
+            >
+              <img
+                src={category.strCategoryThumb}
+                alt={category.strCategory}
+                className="w-full h-40 object-cover"
+              />
+              <div className="p-4 text-center">
+                <h3 className="text-lg font-semibold">{category.strCategory}</h3>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Category Meals Section */}
+      {categoryMeals.length > 0 && !loading && (
+        <div className="mt-10">
+          <h2 className="text-2xl font-bold text-white text-center mb-6">
+            Meals in {selectedCategory} Category
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {categoryMeals.map((meal) => (
+              <div key={meal.idMeal} className="bg-cardBg rounded shadow overflow-hidden hover:shadow-lg transition-shadow">
+                <img
+                  src={meal.strMealThumb}
+                  alt={meal.strMeal}
+                  className="w-full h-40 object-cover cursor-pointer transform transition duration-300 hover:scale-105"
+                  onClick={() => handleCardClick(meal)}
+                />
+                <div className="p-4 text-center">
+                  <h3 className="text-lg font-semibold text-accent">{meal.strMeal}</h3>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {!loading && !error && meals.length === 0 && searchTerm && (
+        <div className="text-center">No recipes found. Try another search!</div>
+      )}
+
       {selectedRecipe && <RecipeModal recipe={selectedRecipe} onClose={closeModal} />}
     </div>
   );
