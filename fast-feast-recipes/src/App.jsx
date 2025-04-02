@@ -7,10 +7,16 @@ import Comments from './pages/Comments'; // Ensure Comments.jsx exists in src/pa
 import { FavoritesProvider } from './FavoritesContext';
 import logo from './assets/logo.png';
 import { FiMenu, FiX, FiHome, FiHeart } from 'react-icons/fi';
+import RecipeModal from './RecipeModal'; // Import the RecipeModal component
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [selectedRecipe, setSelectedRecipe] = useState(null); // Track selected recipe for modal
+
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
+
+  const openRecipeModal = (recipe) => setSelectedRecipe(recipe); // Open the recipe modal with selected recipe
+  const closeRecipeModal = () => setSelectedRecipe(null); // Close the recipe modal
 
   return (
     <FavoritesProvider>
@@ -81,10 +87,18 @@ function App() {
           </nav>
           {/* Main Content Routes */}
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home openRecipeModal={openRecipeModal} />} />
             <Route path="/favorites" element={<Favorites />} />
             <Route path="/comments" element={<Comments />} />
           </Routes>
+          
+          {/* Render Recipe Modal */}
+          {selectedRecipe && (
+            <RecipeModal
+              recipe={selectedRecipe}
+              onClose={closeRecipeModal}
+            />
+          )}
         </div>
       </Router>
     </FavoritesProvider>

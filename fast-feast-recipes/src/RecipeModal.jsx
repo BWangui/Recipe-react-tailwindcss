@@ -1,7 +1,10 @@
 // src/RecipeModal.jsx
 import React from 'react';
+import { useFavorites } from './FavoritesContext'; // Assuming the context is in the same folder
 
 function RecipeModal({ recipe, onClose }) {
+  const { favorites, addFavorite, removeFavorite } = useFavorites();
+
   if (!recipe) return null;
 
   // Extract ingredients and measures into an ordered array
@@ -15,14 +18,24 @@ function RecipeModal({ recipe, onClose }) {
   }
 
   // Split the recipe instructions into steps based on newline characters.
-  // This assumes that the API separates steps by newlines.
   const instructionSteps = recipe.strInstructions
     ? recipe.strInstructions.split('\n').filter(step => step.trim() !== '')
     : [];
 
+  // Check if the recipe is already in favorites
+  const isFavorite = favorites.some((fav) => fav.idMeal === recipe.idMeal);
+
+  const handleFavoriteClick = () => {
+    if (isFavorite) {
+      removeFavorite(recipe.idMeal); // Remove from favorites
+    } else {
+      addFavorite(recipe); // Add to favorites
+    }
+  };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-      {/* Modal container with a background color (blackCoffee) */}
+      {/* Modal container */}
       <div className="bg-blackCoffee rounded-lg shadow-lg max-w-3xl w-full relative p-6 overflow-y-auto max-h-screen">
         <button
           onClick={onClose}
@@ -54,6 +67,23 @@ function RecipeModal({ recipe, onClose }) {
         ) : (
           <p className="text-lg text-black font-bold">{recipe.strInstructions}</p>
         )}
+
+        {/* Favorite Button */}
+        <button
+          onClick={handleFavoriteClick}
+          className={`mt-4 px-4 py-2 rounded-full transition-colors ${
+            isFavorite ? 'bg-red-500 text-white' : 'bg-white border border-gray-300'
+          }`}
+        >
+          <button
+  onClick={() => addFavorite(recipe.idMeal)}
+  className="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
+>
+  Add to Favorites
+</button>
+
+          {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
+        </button>
       </div>
     </div>
   );
