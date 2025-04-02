@@ -17,7 +17,7 @@ function Home() {
 
   const { addFavorite, removeFavorite, isFavorite } = useFavorites();
 
-  // Fetch recipes based on search term (full details)
+  // Fetch recipes based on search term (full details from search endpoint)
   useEffect(() => {
     if (!searchTerm) {
       setMeals([]);
@@ -95,7 +95,7 @@ function Home() {
       });
   };
 
-  // Open modal with full recipe details
+  // Open modal with full recipe details using lookup endpoint (for both search and category meals)
   const handleCardClick = (meal) => {
     fetchRecipeById(meal.idMeal);
   };
@@ -104,7 +104,7 @@ function Home() {
     setSelectedRecipe(null);
   };
 
-  // Fetch meals for a clicked category (limited details)
+  // Fetch meals for a clicked category (limited details from filter endpoint)
   const handleCategoryClick = (categoryName) => {
     setLoading(true);
     setError(null);
@@ -123,7 +123,7 @@ function Home() {
   };
 
   return (
-    <div className="bg-white min-h-screen text-black p-6">
+    <div className="bg-blackCoffee min-h-screen text-white p-6">
       {/* Search & Random Recipe Section */}
       <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8">
         <form onSubmit={handleSearch} className="flex w-full max-w-md">
@@ -131,7 +131,7 @@ function Home() {
             type="text"
             name="search"
             placeholder="Search for a meal..."
-            className="w-full px-4 py-2 border border-gray-300 bg-gray-100 rounded-l-md focus:bg-white focus:text-black focus:outline-none"
+            className="w-full px-4 py-2 border border-gray-300 bg-cardBg text-white rounded-l-md focus:bg-white focus:text-black focus:outline-none"
           />
           <button
             type="submit"
@@ -156,7 +156,7 @@ function Home() {
           {meals.map((meal) => (
             <div 
               key={meal.idMeal} 
-              className="bg-gray-100 rounded shadow overflow-hidden hover:shadow-lg transition-shadow"
+              className="bg-cardBg rounded shadow overflow-hidden hover:shadow-lg transition-shadow"
             >
               <img
                 src={meal.strMealThumb}
@@ -166,7 +166,7 @@ function Home() {
               />
               <div className="p-4">
                 <h2 className="text-xl font-semibold text-accent">{meal.strMeal}</h2>
-                <p className="mt-2 text-gray-700">
+                <p className="mt-2 text-textMuted">
                   {meal.strInstructions.substring(0, 80)}...
                 </p>
                 <button
@@ -190,7 +190,7 @@ function Home() {
 
       {/* All Categories Section */}
       <div className="mt-10">
-        <h2 className="text-3xl font-bold text-center mb-6">All Categories</h2>
+        <h2 className="text-3xl font-bold text-white text-center mb-6">All Categories</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
           {categories.map((category) => (
             <div
@@ -214,14 +214,14 @@ function Home() {
       {/* Category Meals Section */}
       {categoryMeals.length > 0 && !loading && (
         <div className="mt-10">
-          <h2 className="text-2xl font-bold text-center mb-6">
+          <h2 className="text-2xl font-bold text-white text-center mb-6">
             Meals in {selectedCategory} Category
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {categoryMeals.map((meal) => (
               <div
                 key={meal.idMeal}
-                className="bg-gray-100 rounded shadow overflow-hidden hover:shadow-lg transition-shadow"
+                className="bg-cardBg rounded shadow overflow-hidden hover:shadow-lg transition-shadow"
               >
                 <img
                   src={meal.strMealThumb}
