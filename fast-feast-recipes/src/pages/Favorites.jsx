@@ -4,7 +4,7 @@ import { useFavorites } from '../FavoritesContext';
 import RecipeModal from '../Recipemodal';
 
 function Favorites() {
-  const { favorites, removeFavorite, addFavorite } = useFavorites(); // Assuming you have an addFavorite function
+  const { favorites, removeFavorite } = useFavorites();
   const [selectedRecipe, setSelectedRecipe] = useState(null);
 
   const handleCardClick = (meal) => {
@@ -16,13 +16,7 @@ function Favorites() {
   };
 
   const handleFavoriteClick = (meal) => {
-    // Check if the recipe is already in favorites
-    const isFavorite = favorites.some((fav) => fav.idMeal === meal.idMeal);
-    if (isFavorite) {
-      removeFavorite(meal.idMeal);
-    } else {
-      addFavorite(meal);
-    }
+    removeFavorite(meal.idMeal); // Remove from favorites
   };
 
   return (
@@ -43,10 +37,10 @@ function Favorites() {
               <div className="p-4">
                 <h2 className="text-xl font-semibold text-accent">{meal.strMeal}</h2>
                 <button
-                  onClick={() => handleFavoriteClick(meal)} // Toggle favorite on click
-                  className={`mt-2 px-4 py-2 rounded transition-colors ${favorites.some((fav) => fav.idMeal === meal.idMeal) ? 'bg-red-500' : 'bg-white border border-gray-300'}`}
+                  onClick={() => handleFavoriteClick(meal)} // Remove from favorites on click
+                  className="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
                 >
-                  {favorites.some((fav) => fav.idMeal === meal.idMeal) ? 'Remove from Favorites' : 'Add to Favorites'}
+                  Remove from Favorites
                 </button>
               </div>
             </div>

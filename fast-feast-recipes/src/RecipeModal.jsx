@@ -75,13 +75,6 @@ function RecipeModal({ recipe, onClose }) {
             isFavorite ? 'bg-red-500 text-white' : 'bg-white border border-gray-300'
           }`}
         >
-          <button
-  onClick={() => addFavorite(recipe.idMeal)}
-  className="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
->
-  Add to Favorites
-</button>
-
           {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
         </button>
       </div>
