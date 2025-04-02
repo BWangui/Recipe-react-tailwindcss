@@ -1,7 +1,7 @@
 // src/pages/Favorites.jsx
 import React, { useState } from 'react';
 import { useFavorites } from '../FavoritesContext';
-import RecipeModal from '../RecipeModal';
+import RecipeModal from '../Recipemodal';
 
 function Favorites() {
   const { favorites, removeFavorite, addFavorite } = useFavorites(); // Assuming you have an addFavorite function

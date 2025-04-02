@@ -1,7 +1,7 @@
 // src/pages/Home.jsx
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import RecipeModal from '../RecipeModal';
+import RecipeModal from '../Recipemodal';
 import { useFavorites } from '../FavoritesContext';
 import { FiHeart } from 'react-icons/fi';
 

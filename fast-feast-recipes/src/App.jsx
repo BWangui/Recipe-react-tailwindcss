@@ -7,7 +7,7 @@ import Comments from './pages/Comments'; // Ensure Comments.jsx exists in src/pa
 import { FavoritesProvider } from './FavoritesContext';
 import logo from './assets/logo.png';
 import { FiMenu, FiX, FiHome, FiHeart } from 'react-icons/fi';
-import RecipeModal from './RecipeModal'; // Import the RecipeModal component
+import RecipeModal from './Recipemodal'; // Import the RecipeModal component
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
