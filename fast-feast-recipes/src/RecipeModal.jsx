@@ -3,7 +3,7 @@ import React from 'react';
 import { useFavorites } from './FavoritesContext'; // Ensure context is imported
 
 function RecipeModal({ recipe, onClose }) {
-  const { addFavorite, removeFavorite, isFavorite } = useFavorites(); // Access context functions and state
+  const {favorites, addFavorite, removeFavorite, isFavorite } = useFavorites(); // Access context functions and state
 
   if (!recipe) return null;
 
@@ -18,7 +18,7 @@ function RecipeModal({ recipe, onClose }) {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
       <div className="bg-white rounded-lg shadow-lg max-w-3xl w-full relative p-6 overflow-y-auto max-h-screen">
-        <button onClick={onClose} className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 text-2xl">
+        <button onClick={onClose} className="absolute top-4 right-4 text-red-600 hover:text-red-800 text-2xl">
           &times;
         </button>
         <h2 className="text-3xl font-bold mb-4">{recipe.strMeal}</h2>
