@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import Favorites from './pages/Favorites';
+import Comments from './pages/Comments'; // Ensure Comments.jsx exists in src/pages
 import { FavoritesProvider } from './FavoritesContext';
 import logo from './assets/logo.png';
 import { FiMenu, FiX, FiHome, FiHeart } from 'react-icons/fi';
@@ -14,9 +15,7 @@ function App() {
   return (
     <FavoritesProvider>
       <Router>
-        {/* Overall white background */}
         <div className="min-h-screen bg-white">
-          {/* Navigation bar with warm orange background */}
           <nav className="bg-[#FFA726] shadow mb-8">
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
               <Link to="/" className="flex items-center">
@@ -36,6 +35,12 @@ function App() {
                   className="text-black text-xl font-semibold hover:text-gray-800 flex items-center gap-1"
                 >
                   <FiHeart size={20} /> <span>Favorites</span>
+                </Link>
+                <Link
+                  to="/comments"
+                  className="text-black text-xl font-semibold hover:text-gray-800 flex items-center gap-1"
+                >
+                  <span>Your Feedback</span>
                 </Link>
               </div>
               {/* Mobile Navigation Toggle */}
@@ -63,14 +68,22 @@ function App() {
                   >
                     <FiHeart size={20} /> <span>Favorites</span>
                   </Link>
+                  <Link
+                    to="/comments"
+                    onClick={toggleMobileMenu}
+                    className="text-black text-xl font-semibold hover:text-gray-800 flex items-center gap-1"
+                  >
+                    <span>Your Feedback</span>
+                  </Link>
                 </div>
               </div>
             )}
           </nav>
-          {/* Main Content */}
+          {/* Main Content Routes */}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/favorites" element={<Favorites />} />
+            <Route path="/comments" element={<Comments />} />
           </Routes>
         </div>
       </Router>
