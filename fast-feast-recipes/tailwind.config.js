@@ -7,18 +7,16 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Dark background reminiscent of coffee or chocolate
-        background: '#2C1A14',
-        // Slightly lighter background for cards or sections
-        card: '#3D2B24',
-        // Warm orange accent for buttons or highlights
-        accent: '#FBB249',
-        // White text for high contrast
-        textLight: '#FFFFFF',
-        // Muted text or secondary text
-        textMuted: '#C5A991',
+        blackCoffee: '#3B3024',  // Overall background
+        cardBg: '#3D2B24',       // Card background for meals
+        primary: '#E4291D',      // For primary buttons
+        secondary: '#1D2636',    // For secondary actions
+        accent: '#FBB249',       // For highlights, headings, favorites button, etc.
+        highlight: '#08396A',    // For any additional accents (if needed)
+        text: '#FFFFFF',         // Default text (white)
+        textMuted: '#C5A991',     // Muted text for descriptions
       },
     },
   },
   plugins: [],
-}
+};

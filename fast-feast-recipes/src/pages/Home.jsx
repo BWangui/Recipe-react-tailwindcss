@@ -16,7 +16,7 @@ function Home() {
 
   const { addFavorite, removeFavorite, isFavorite } = useFavorites();
 
-  // Fetch recipes based on search term
+  // Fetch recipes based on search term (full details from search endpoint)
   useEffect(() => {
     if (!searchTerm) {
       setMeals([]);
@@ -37,7 +37,7 @@ function Home() {
       });
   }, [searchTerm]);
 
-  // Fetch all categories on mount
+  // Fetch all categories on component mount
   useEffect(() => {
     fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`)
       .then(response => response.json())
@@ -54,7 +54,7 @@ function Home() {
     setSearchTerm(term);
   };
 
-  // Fetch a random recipe
+  // Fetch a random recipe (full details)
   const fetchRandomRecipe = () => {
     setLoading(true);
     setError(null);
@@ -62,7 +62,8 @@ function Home() {
       .then(response => response.json())
       .then(data => {
         if (data.meals) {
-          setMeals(data.meals);
+          // Always use lookup endpoint to ensure full details (if needed)
+          fetchRecipeById(data.meals[0].idMeal);
           setSearchTerm('');
         }
         setLoading(false);
@@ -74,16 +75,35 @@ function Home() {
       });
   };
 
-  // Open modal with detailed recipe info
+  // Fetch full recipe details using the lookup endpoint
+  const fetchRecipeById = (id) => {
+    setLoading(true);
+    setError(null);
+    fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.meals) {
+          setSelectedRecipe(data.meals[0]);
+        }
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Error fetching recipe details:', err);
+        setError('Failed to fetch recipe details. Please try again.');
+        setLoading(false);
+      });
+  };
+
+  // Open modal with full recipe details using lookup endpoint (for both search and category meals)
   const handleCardClick = (meal) => {
-    setSelectedRecipe(meal);
+    fetchRecipeById(meal.idMeal);
   };
 
   const closeModal = () => {
     setSelectedRecipe(null);
   };
 
-  // Fetch meals for a clicked category
+  // Fetch meals for a clicked category (limited details from filter endpoint)
   const handleCategoryClick = (categoryName) => {
     setLoading(true);
     setError(null);
@@ -130,11 +150,13 @@ function Home() {
       {/* Display Search Results */}
       {loading && <div className="text-center text-lg">Loading...</div>}
       {error && <div className="text-center text-red-500 mb-4">{error}</div>}
-
       {!loading && !error && meals.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {meals.map((meal) => (
-            <div key={meal.idMeal} className="bg-cardBg rounded shadow overflow-hidden hover:shadow-lg transition-shadow">
+            <div 
+              key={meal.idMeal} 
+              className="bg-cardBg rounded shadow overflow-hidden hover:shadow-lg transition-shadow"
+            >
               <img
                 src={meal.strMealThumb}
                 alt={meal.strMeal}
@@ -143,7 +165,9 @@ function Home() {
               />
               <div className="p-4">
                 <h2 className="text-xl font-semibold text-accent">{meal.strMeal}</h2>
-                <p className="mt-2 text-textMuted">{meal.strInstructions.substring(0, 80)}...</p>
+                <p className="mt-2 text-textMuted">
+                  {meal.strInstructions.substring(0, 80)}...
+                </p>
                 <button
                   onClick={() => {
                     if (isFavorite(meal.idMeal)) {
@@ -194,7 +218,10 @@ function Home() {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {categoryMeals.map((meal) => (
-              <div key={meal.idMeal} className="bg-cardBg rounded shadow overflow-hidden hover:shadow-lg transition-shadow">
+              <div
+                key={meal.idMeal}
+                className="bg-cardBg rounded shadow overflow-hidden hover:shadow-lg transition-shadow"
+              >
                 <img
                   src={meal.strMealThumb}
                   alt={meal.strMeal}
@@ -210,10 +237,12 @@ function Home() {
         </div>
       )}
 
+      {/* No recipes found message */}
       {!loading && !error && meals.length === 0 && searchTerm && (
         <div className="text-center">No recipes found. Try another search!</div>
       )}
 
+      {/* Recipe Modal */}
       {selectedRecipe && <RecipeModal recipe={selectedRecipe} onClose={closeModal} />}
     </div>
   );
