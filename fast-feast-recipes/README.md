@@ -22,6 +22,10 @@ Fast Feast Recipes is a responsive recipe finder web application built with Reac
 - **Favorites:**  
   (If integrated) Easily add or remove recipes from your favorites.
 
+   **Your Feedback:**  
+  Navigate to a dedicated "Your Feedback" page where users can leave and view comments.
+
+
 ## Technologies Used
 
 - **React:** JavaScript library for building user interfaces.

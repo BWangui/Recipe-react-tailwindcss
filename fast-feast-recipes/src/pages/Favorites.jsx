@@ -23,7 +23,7 @@ function Favorites() {
     <div className="p-4">
       <h1 className="text-3xl font-bold text-center mb-8 text-accent">Your Favorite Recipes</h1>
       {favorites.length === 0 ? (
-        <div className="text-center text-red-800">No favorites added yet.</div>
+        <div className="text-center text-blue-800">No favorites added yet.</div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {favorites.map((meal) => (
